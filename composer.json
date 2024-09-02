@@ -1,0 +1,34 @@
+{
+    "name": "yakovenko/lighthouse-validation-error-exception",
+    "description": "Advanced validation for Laravel with custom error exception handling.",
+    "keywords": ["laravel", "laravel-graphql", "lighthouse", "validation", "error-exception"],
+    "type": "library",
+    "license": "MIT",
+    "version": "1.0.0",
+    "authors": [
+        {
+            "name": "Alexander Yakovenko",
+            "email": "paffen.web@gmail.com",
+            "homepage": "https://github.com/as-yakovenko"
+        }
+    ],
+    "autoload": {
+      "psr-4": {
+        "Yakovenko\\ValidationErrorException\\": "src/"
+      }
+    },
+    "require": {
+        "php": "^8",
+        "nuwave/lighthouse": "^6.0",
+        "laravel/framework": "^9.0 || ^10.0 || ^11.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Yakovenko\\ValidationErrorException\\ValidationErrorExceptionServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

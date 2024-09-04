@@ -8,16 +8,13 @@ final class {{ class }}
 {
     use Validation;
 
-    protected const CLASS_NAME = '{{ class }}';
-
     /**
      * Validate if creation is allowed
      * @return bool
      */
-    public static function canCreate( array $args, ?string $className = self::CLASS_NAME ): bool
+    public static function canCreate( array $args, ?string $className = __CLASS__ ): bool
     {
         $validator = Validator::make($args, [
-            // Define your validation rules here
             // 'title' => 'required|string|max:191',
         ]);
 
@@ -30,12 +27,26 @@ final class {{ class }}
      * Validate if update is allowed
      * @return bool
      */
-    public static function canUpdate( array $args, object $object, ?string $className = self::CLASS_NAME ): bool
+    public static function canUpdate( array $args, ?object $object, ?string $className = __CLASS__ ): bool
     {
         $validator = Validator::make($args, [
-            // Define your validation rules here
             // 'id' => 'required|exists:users,id',
             // 'title' => 'required|string|max:191',
+        ]);
+
+        self::isFails( $validator, $className );
+
+        return true;
+    }
+
+    /**
+     * Validate if delete is allowed
+     * @return bool
+     */
+    public static function canDelete( array $args, ?object $object, ?string $className = __CLASS__ ): bool
+    {
+        $validator = Validator::make($args, [
+            // 'id' => 'required|exists:users,id',
         ]);
 
         self::isFails( $validator, $className );

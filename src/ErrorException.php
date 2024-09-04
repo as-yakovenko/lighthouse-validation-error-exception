@@ -6,7 +6,6 @@ use Exception;
 use GraphQL\Error\ClientAware;
 use GraphQL\Error\ProvidesExtensions;
 
-
 final class ErrorException extends Exception implements ClientAware, ProvidesExtensions
 {
     private string $class;

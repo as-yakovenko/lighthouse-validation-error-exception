@@ -38,19 +38,19 @@ php artisan vendor:publish --tag=lighthouse-validation-error-exception
 
 To create a new validation class, use the following command:
 ```bash
-php artisan lighthouse:validation {name}
+php artisan yas:validation {name}
 ```
 
 Replace {name} with the name of your validation class. For example:
 ```bash
-php artisan lighthouse:validation User
+php artisan yas:validation User
 ```
 
 **Usage Example**
 
 1 - Create a validation class:
 ```bash
-php artisan lighthouse:validation Example
+php artisan yas:validation Example
 ```
 
 2 - Edit the created file app/Validations/ExampleValidation.php to define validation rules.

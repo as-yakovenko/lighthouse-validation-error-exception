@@ -27,7 +27,7 @@ final class {{ class }}
      * Validate if update is allowed
      * @return bool
      */
-    public static function canUpdate( array $args, ?object $object, ?string $className = __CLASS__ ): bool
+    public static function canUpdate( array $args, ?string $className = __CLASS__ ): bool
     {
         $validator = Validator::make($args, [
             // 'id' => 'required|exists:users,id',
@@ -43,14 +43,8 @@ final class {{ class }}
      * Validate if delete is allowed
      * @return bool
      */
-    public static function canDelete( array $args, ?object $object, ?string $className = __CLASS__ ): bool
+    public static function canDelete( array $args, ?string $className = __CLASS__ ): bool
     {
-        $validator = Validator::make($args, [
-            // 'id' => 'required|exists:users,id',
-        ]);
-
-        self::isFails( $validator, $className );
-
         return true;
     }
 }

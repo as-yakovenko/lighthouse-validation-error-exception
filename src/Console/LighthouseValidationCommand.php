@@ -11,7 +11,7 @@ class LighthouseValidationCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'lighthouse:validation {name : The name of the validation class}';
+    protected $signature = 'yas:validation {name : The name of the validation class}';
 
     /**
      * The console command description.

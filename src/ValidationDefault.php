@@ -74,7 +74,7 @@ trait ValidationDefault
     {
         if ( $validator->fails() ) {
             self::throwError(
-                errorMsg  : self::getErrorValidator( $validator ),
+                errorMsg  : $validator->errors()->first(),
                 action    : 'validator',
                 className : self::className( $className )
             );

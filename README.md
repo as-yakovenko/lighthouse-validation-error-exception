@@ -56,3 +56,7 @@ php artisan yas:validation Example
 2 - Edit the created file app/Validations/ExampleValidation.php to define validation rules.
 
 3 - Use the created validation class in your code for data validation by using `canCreate` and `canUpdate` methods.
+
+### Author
+
+- **Alexander Yakovenko** - [GitHub](https://github.com/as-yakovenko) - [Email](mailto:paffen.web@gmail.com)

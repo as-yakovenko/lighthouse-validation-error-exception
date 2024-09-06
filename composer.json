@@ -4,7 +4,7 @@
     "keywords": ["laravel", "laravel-graphql", "lighthouse", "validation", "error-exception"],
     "type": "library",
     "license": "MIT",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "authors": [
         {
             "name": "Alexander Yakovenko",
@@ -28,6 +28,10 @@
                 "Yakovenko\\ValidationErrorException\\ValidationErrorExceptionServiceProvider"
             ]
         }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
     },
     "minimum-stability": "stable",
     "prefer-stable": true

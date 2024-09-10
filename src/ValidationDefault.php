@@ -41,6 +41,29 @@ trait ValidationDefault
     }
 
     /**
+     * Checks if the provided record is empty. If the record is not empty, it throws an error.
+     *
+     * @param mixed $record
+     * @param int|string|null $id
+     * @param string|null $className
+     * @return bool Returns true if the record is empty, otherwise throws an error.
+     * @throws ErrorException If the record is not empty.
+     */
+    public static function isRecordEmpty( mixed $record = null, int|string|null $id, ?string $className = null ): bool
+    {
+        if( !empty( $record ) ) {
+            self::throwError(
+                errorMsg  : __('GL_RecordExist') . ": {$id}",
+                action    : 'isRecordExist',
+                className : self::className( $className ),
+            );
+        }
+
+        return true;
+    }
+
+
+    /**
      * Check if two values are equal.
      *
      * @param int|string $currentValue

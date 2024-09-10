@@ -16,8 +16,8 @@ final class ErrorException extends Exception implements ClientAware, ProvidesExt
     {
         parent::__construct( $message );
 
-        $this->class  = config('app.env') === 'production' ? null : $class;
-        $this->action = config('app.env') === 'production' ? null : $action;
+        $this->class  = $class;
+        $this->action = $action;
         $this->reason = $reason;
     }
 
@@ -33,10 +33,15 @@ final class ErrorException extends Exception implements ClientAware, ProvidesExt
 
     public function getExtensions(): array
     {
-        return [
-            'action' => $this->action,
+        $extensions = [
             'reason' => $this->reason,
-            'class'  => $this->class,
         ];
+
+        if ( config('app.env') !== 'production' ) {
+            $extensions['class']  = $this->class;
+            $extensions['action'] = $this->action;
+        }
+
+        return $extensions;
     }
 }

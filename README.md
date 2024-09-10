@@ -27,6 +27,19 @@ Then install the package with:
 composer require yakovenko/lighthouse-validation-error-exception
 ```
 
+**Registration provider**
+
+You need to add your service provider to the `providers` array in your Laravel application's ```config/app.php``` file:
+
+```php
+'providers' => [
+    /*
+     * Package Service Providers...
+     */
+    Yakovenko\ValidationErrorException\ValidationErrorExceptionServiceProvider::class,
+],
+```
+
 **Publish Configuration**
 
 To publish configuration files and other necessary resources, run:

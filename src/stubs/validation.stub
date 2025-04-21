@@ -12,13 +12,13 @@ final class {{ class }}
      * Validate if creation is allowed
      * @return bool
      */
-    public static function canCreate( array $args, ?string $className = __CLASS__ ): bool
+    public static function canCreate( array $args ): bool
     {
-        $validator = Validator::make($args, [
+        $validator = Validator::make( $args, [
             // 'title' => 'required|string|max:191',
         ]);
 
-        self::isFails( $validator, $className );
+        self::isFails( $validator );
 
         return true;
     }
@@ -27,24 +27,15 @@ final class {{ class }}
      * Validate if update is allowed
      * @return bool
      */
-    public static function canUpdate( array $args, ?string $className = __CLASS__ ): bool
+    public static function canUpdate( array $args ): bool
     {
-        $validator = Validator::make($args, [
-            // 'id' => 'required|exists:users,id',
+        $validator = Validator::make( $args, [
+            // 'id'    => 'required|exists:users,id',
             // 'title' => 'required|string|max:191',
         ]);
 
-        self::isFails( $validator, $className );
+        self::isFails( $validator );
 
-        return true;
-    }
-
-    /**
-     * Validate if delete is allowed
-     * @return bool
-     */
-    public static function canDelete( array $args, ?string $className = __CLASS__ ): bool
-    {
         return true;
     }
 }

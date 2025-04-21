@@ -21,16 +21,13 @@ trait ValidationDefault
      * Check if the model exists, otherwise throw an error.
      *
      * @param object|null $model
-     * @param int $id
-     * @param string|null $modelClass
+     * @param int|string|null $id
      * @return bool
      * @throws ErrorException
      */
-    public static function isModelExists( ?object $model = null, ?int $id, ?string $modelClass = 'Model' ): bool
+    public static function isModelExists( ?object $model = null, int|string|null $id, ?string $modelName = 'Object' ): bool
     {
-        if( empty( $model ) ) {
-            $modelName = class_basename( $modelClass );
-
+        if ( empty( $model ) ) {
             self::throwError(
                 errorMsg  : __('GL_NotExist') . " {$modelName}: {$id}",
                 action    : 'isModelExists',
@@ -45,34 +42,30 @@ trait ValidationDefault
      *
      * @param mixed $record
      * @param int|string|null $id
-     * @param string|null $className
-     * @return bool Returns true if the record is empty, otherwise throws an error.
-     * @throws ErrorException If the record is not empty.
+     * @return bool
+     * @throws ErrorException
      */
-    public static function isRecordEmpty( mixed $record = null, int|string|null $id, ?string $className = null ): bool
+    public static function isRecordEmpty( mixed $record = null, int|string|null $id ): bool
     {
-        if( !empty( $record ) ) {
+        if ( !empty( $record ) ) {
             self::throwError(
                 errorMsg  : __('GL_RecordExist') . ": {$id}",
                 action    : 'isRecordExist',
-                className : self::className( $className ),
             );
         }
 
         return true;
     }
 
-
     /**
      * Check if two values are equal.
      *
      * @param int|string $currentValue
      * @param int|string $checkValue
-     * @param string|null $className
      * @return bool
      * @throws ErrorException
      */
-    public static function isValuesEqual( int|string $currentValue, int|string $checkValue, ?string $className = null ): bool
+    public static function isValuesEqual( int|string $currentValue, int|string $checkValue ): bool
     {
         if ( $currentValue === $checkValue ) {
             return true;
@@ -81,7 +74,6 @@ trait ValidationDefault
         self::throwError(
             errorMsg  : __('GL_ValuesNotEqual'),
             action    : 'isValuesEqual',
-            className : self::className( $className ),
         );
     }
 
@@ -89,17 +81,15 @@ trait ValidationDefault
      * Check if the validator has failed.
      *
      * @param Validator $validator
-     * @param string|null $className
      * @return void
      * @throws ErrorException
      */
-    public static function isFails( Validator $validator, ?string $className = null ): void
+    public static function isFails( Validator $validator ): void
     {
         if ( $validator->fails() ) {
             self::throwError(
                 errorMsg  : $validator->errors()->first(),
                 action    : 'validator',
-                className : self::className( $className )
             );
         }
     }
@@ -109,20 +99,18 @@ trait ValidationDefault
      *
      * @param mixed $value
      * @param string|null $errorMsg
-     * @param string|null $className
      * @return bool
      * @throws ErrorException
      */
-    public static function isEmpty( mixed $value, ?string $errorMsg = null, ?string $className = null ): bool
+    public static function isEmpty( mixed $value, ?string $errorMsg = null ): bool
     {
-        if( !empty( $value ) ){
+        if ( !empty( $value ) ) {
             return true;
         }
 
         self::throwError(
-            errorMsg  : $errorMsg ? $errorMsg : __('GL_NotExist'),
-            action    : 'isEmpty',
-            className : self::className( $className )
+            errorMsg  : $errorMsg ?: __('GL_NotExist'),
+            action    : 'isEmpty'
         );
     }
 
@@ -131,17 +119,15 @@ trait ValidationDefault
      *
      * @param int $user_id
      * @param int $author_id
-     * @param string|null $className
      * @return bool
      * @throws ErrorException
      */
-    public static function isAuthor( int $user_id, int $author_id, ?string $className = null ): bool
+    public static function isAuthor( int $user_id, int $author_id ): bool
     {
-        if( $user_id !== $author_id ) {
+        if ( $user_id !== $author_id ) {
             self::throwError(
                 errorMsg  : __('GL_ACTION_FAILED_Rights'),
                 action    : 'isAuthor',
-                className : self::className( $className )
             );
         }
 
@@ -156,7 +142,7 @@ trait ValidationDefault
      */
     public static function getErrorValidator( Validator $validator ): string
     {
-        foreach( $validator->messages()->getMessages() as $field_name => $messages ){
+        foreach ( $validator->messages()->getMessages() as $field_name => $messages ) {
             return $field_name . ': ' . $messages[0];
         }
     }

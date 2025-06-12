@@ -4,6 +4,10 @@ namespace Yakovenko\ValidationErrorException;
 
 use Illuminate\Validation\Validator;
 
+/**
+ * Business validation trait following "throw on error, return true on success" pattern.
+ * All validation methods either throw ErrorException or return true.
+ */
 trait ValidationDefault
 {
     /**
@@ -58,6 +62,28 @@ trait ValidationDefault
     }
 
     /**
+     * Check if the value is empty.
+     *
+     * @param mixed $value
+     * @param string|null $errorMsg
+     * @return bool
+     * @throws ErrorException
+     */
+    public static function isEmpty( mixed $value, ?string $errorMsg = null ) : bool
+    {
+        if ( !empty( $value ) ) {
+            return true;
+        }
+
+        self::throwError(
+            errorMsg  : $errorMsg ?: __('GL_NotExist'),
+            action    : 'isEmpty'
+        );
+
+        return false;
+    }
+
+    /**
      * Check if two values are equal.
      *
      * @param int|string $currentValue
@@ -67,14 +93,14 @@ trait ValidationDefault
      */
     public static function isValuesEqual( int|string $currentValue, int|string $checkValue ): bool
     {
-        if ( $currentValue === $checkValue ) {
-            return true;
+        if ( $currentValue !== $checkValue ) {
+            self::throwError(
+                errorMsg  : __('GL_ValuesNotEqual'),
+                action    : 'isValuesEqual',
+            );
         }
 
-        self::throwError(
-            errorMsg  : __('GL_ValuesNotEqual'),
-            action    : 'isValuesEqual',
-        );
+        return true;
     }
 
     /**
@@ -92,26 +118,6 @@ trait ValidationDefault
                 action    : 'validator',
             );
         }
-    }
-
-    /**
-     * Check if the value is empty.
-     *
-     * @param mixed $value
-     * @param string|null $errorMsg
-     * @return bool
-     * @throws ErrorException
-     */
-    public static function isEmpty( mixed $value, ?string $errorMsg = null ): bool
-    {
-        if ( !empty( $value ) ) {
-            return true;
-        }
-
-        self::throwError(
-            errorMsg  : $errorMsg ?: __('GL_NotExist'),
-            action    : 'isEmpty'
-        );
     }
 
     /**
@@ -138,13 +144,15 @@ trait ValidationDefault
      * Get the first error message from the validator.
      *
      * @param Validator $validator The validator instance.
-     * @return string The first validation error message in the format "field_name: message".
+     * @return string|null The first validation error message in the format "field_name: message".
      */
-    public static function getErrorValidator( Validator $validator ): string
+    public static function getErrorValidator( Validator $validator ): ?string
     {
         foreach ( $validator->messages()->getMessages() as $field_name => $messages ) {
             return $field_name . ': ' . $messages[0];
         }
+
+        return null;
     }
 
     /**
